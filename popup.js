@@ -90,8 +90,8 @@ function getImageUrl(searchTerm, callback, errorCallback) {
 
 function stashURL(url, title) {
   var xhr = new XMLHttpRequest();
-  // xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
-  xhr.open('POST', 'http://localhost:3000/links');
+  xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
+  // xhr.open('POST', 'http://localhost:3000/links');
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onload = function() {
