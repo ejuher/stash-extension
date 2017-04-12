@@ -34,7 +34,7 @@ function getCurrentTabUrl(callback) {
     // "url" properties.
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
-    callback(url, title);
+    callback(title, url);
   });
 
   // Most methods of the Chrome extension APIs are asynchronous. This means that
@@ -88,33 +88,34 @@ function getImageUrl(searchTerm, callback, errorCallback) {
   x.send();
 }
 
-function stashURL(url, title) {
+function stashURL(title, url) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
   // xhr.open('POST', 'http://localhost:3000/links');
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onload = function() {
-    renderStatus('SUCCESS', xhr)
+    renderStatus('STASHED!')
+    // check here for error status?
   };
   xhr.onerror = function() { // not working...
     renderStatus('ERROR', xhr);
   };
-  var data = {data: {attributes: {url: url, title: title}, type: 'links'}};
+  var data = {data: {attributes: {title: title, url: url}, type: 'links'}};
   console.log(JSON.stringify(data));
   xhr.send(JSON.stringify(data));
 }
 
-function renderStatus(url, title) {
+function renderStatus(title, url) {
   document.getElementById('title').textContent = title;
   document.getElementById('url').textContent = url;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  getCurrentTabUrl(function(url, title) {
-    renderStatus(url, title);
+  getCurrentTabUrl(function(title, url) {
+    renderStatus(title, url);
     console.log('ok!');
 
-    stashURL(url, title)
+    stashURL(title, url)
   });
 });
