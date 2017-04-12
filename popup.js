@@ -95,11 +95,11 @@ function stashURL(title, url) {
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onload = function() {
-    renderStatus('STASHED!')
-    // check here for error status?
-  };
-  xhr.onerror = function() { // not working...
-    renderStatus('ERROR', xhr);
+    if (xhr.status === 200) {
+      renderStatus('STASHED!')
+    } else {
+      renderStatus('ERROR!', xhr.statusText)
+    }
   };
   var data = {data: {attributes: {title: title, url: url}, type: 'links'}};
   console.log(JSON.stringify(data));
