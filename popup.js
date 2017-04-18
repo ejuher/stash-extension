@@ -97,6 +97,9 @@ function stashURL(title, url) {
   xhr.onload = function() {
     if (xhr.status === 200) {
       renderStatus('STASHED!')
+      window.setTimeout(function() {
+        window.close();
+      }, 3500);
     } else {
       renderStatus('ERROR!', xhr.statusText)
     }
@@ -113,9 +116,7 @@ function renderStatus(title, url) {
 
 document.addEventListener('DOMContentLoaded', function() {
   getCurrentTabUrl(function(title, url) {
-    renderStatus(title, url);
-    console.log('ok!');
-
+    renderStatus('STASHING...');
     stashURL(title, url)
   });
 });
