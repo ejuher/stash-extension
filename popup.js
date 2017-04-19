@@ -8,7 +8,7 @@
  * @param {function(string)} callback - called when the URL of the current tab
  *   is found.
  */
-function getCurrentTabUrl(callback) {
+function getCurrentTabThenStash(tag) {
   // Query filter to be passed to chrome.tabs.query - see
   // https://developer.chrome.com/extensions/tabs#method-query
   var queryInfo = {
@@ -23,13 +23,14 @@ function getCurrentTabUrl(callback) {
 
     console.assert(typeof url == 'string', 'tab.url should be a string');
 
-    callback(title, url);
+    stashURL(title, url, tag);
   });
 }
 
-function stashURL(title, url) {
+function stashURL(title, url, tag) {
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
+  // xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
+  xhr.open('POST', 'http://localhost:3000/links'); //stashing only works at this url when active
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onload = function() {
@@ -42,7 +43,7 @@ function stashURL(title, url) {
       renderStatus('ERROR!', xhr.statusText)
     }
   };
-  var data = { data: { attributes: {title: title, url: url}, type: 'links' } };
+  var data = { data: { attributes: { title: title, url: url, tag: tag }, type: 'links' } };
   xhr.send(JSON.stringify(data));
 }
 
@@ -52,8 +53,10 @@ function renderStatus(title, url) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  getCurrentTabUrl(function(title, url) {
+  document.getElementById('tag-selector').addEventListener('click', function(event) {
+    var tag = event.target.innerText;
+    event.currentTarget.classList.add('hidden');
     renderStatus('STASHING...');
-    stashURL(title, url)
+    getCurrentTabThenStash(tag);
   });
 });
