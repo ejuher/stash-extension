@@ -29,8 +29,8 @@ function getCurrentTabThenStash(tag) {
 
 function stashURL(title, url, tag) {
   var xhr = new XMLHttpRequest();
-  // xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
-  xhr.open('POST', 'http://localhost:3000/links'); //stashing only works at this url when active
+  xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
+  // xhr.open('POST', 'http://localhost:3000/links'); //stashing only works at this url when active
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onload = function() {

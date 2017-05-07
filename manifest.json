@@ -3,7 +3,7 @@
 
   "name": "Stash",
   "description": "Stash your favorite links for later",
-  "version": "1.0",
+  "version": "0.1",
 
   "browser_action": {
     "default_icon": "lunchbox_green_yellow_xs.png",
@@ -11,7 +11,14 @@
     "default_title": "Stash It!"
   },
   "permissions": [
+    "contextMenus",
     "activeTab",
     "https://damp-beach-68679.herokuapp.com/links"
-  ]
+  ],
+  "icons": {
+    "16": "lunchbox_green_yellow_xs.png"
+  },
+  "background": {
+    "scripts": ["contextMenu.js"]
+  }
 }
