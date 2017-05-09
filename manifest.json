@@ -13,7 +13,7 @@
   "permissions": [
     "contextMenus",
     "activeTab",
-    "https://damp-beach-68679.herokuapp.com/links"
+    "https://stashh.herokuapp.com/links"
   ],
   "icons": {
     "16": "lunchbox_green_yellow_xs.png"
