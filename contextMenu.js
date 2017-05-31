@@ -1,5 +1,5 @@
 const parent = chrome.contextMenus.create({"title": "STASH", "contexts":['link']});
-const tags = ["AUDIO", "VIDEO", "ARTICLE", "OTHER"];
+const tags = ["AUDIO", "VIDEO", "ARTICLE", "EVENT", "PURCHASE", "OTHER"];
 
 let menuItems = {};
 for (let i = 0; i < tags.length; i++) {
@@ -16,7 +16,7 @@ function stash(info, tab) {
 
 function stashURL(title, url, tag) {
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://damp-beach-68679.herokuapp.com/links');
+  xhr.open('POST', 'https://stashh.herokuapp.com/links');
   // xhr.open('POST', 'http://localhost:3000/links'); //stashing only works at this url when active
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-type", "application/json");
