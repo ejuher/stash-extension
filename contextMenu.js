@@ -10,7 +10,13 @@ for (let i = 0; i < tags.length; i++) {
 
 function stash(info, tab) {
   const tag = menuItems[info.menuItemId];
-  const url = info.linkUrl;
+  let url = info.linkUrl;
+  if (tab.url.startsWith('https://www.google.com/search')) {
+    // Links on a google search result page go to a google.com url that then redirects to the desired url.
+    // The server's url parser can't process these urls, but the final destination url is in the query params.
+    // Take the desired url from the query params:
+    url = url.match(/url=(.+)&/)[1].replace(/%2F/g, '/').replace(/%3A/,':')
+  }
   stashURL(null, url, tag);
 }
 
